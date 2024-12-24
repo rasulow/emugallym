@@ -43,6 +43,6 @@ class VerifyOTPSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['email', 'is_staff', 'is_active']
+        fields = ['id', 'email', 'is_staff', 'is_active']
     
     
