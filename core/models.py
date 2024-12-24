@@ -1,4 +1,5 @@
 from django.db import models
+import os
 
 
 class Course(models.Model):
@@ -38,6 +39,12 @@ class Lesson(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def delete(self, *args, **kwargs):
+        if self.material:
+            if os.path.isfile(self.material.path):
+                os.remove(self.material.path)
+        super().delete(*args, **kwargs) 
     
 
     
