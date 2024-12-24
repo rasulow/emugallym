@@ -30,6 +30,7 @@ class Lesson(models.Model):
     title = models.CharField(max_length=255)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    material = models.FileField(upload_to='lessons/', blank=True, null=True)
     order = models.IntegerField()
     is_active = models.BooleanField(default=False)
     created_at = models.DateField(auto_now_add=True)
