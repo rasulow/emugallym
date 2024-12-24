@@ -34,6 +34,7 @@ USERS_SERVICE_URL = 'http://216.250.12.100:5000'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -70,6 +71,12 @@ DATABASES = {
     }
 }
 
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
