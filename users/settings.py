@@ -17,14 +17,27 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-SWAGGER_SETTINGS = {
-   'SECURITY_DEFINITIONS': {
-        'Bearer': {
+# SWAGGER_SETTINGS = {
+#    'SECURITY_DEFINITIONS': {
+#         'Bearer': {
+#             'type': 'apiKey',
+#             'name': 'Authorization',
+#             'in': 'header',
+#         }
+#     }
+# }
+
+SWAGGER_SETTINGS = {    
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {            
             'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header',
-        }
-    }
+            'name': 'Authorization',            
+            'in': 'header'
+        }   
+    },
+    'USE_SESSION_AUTH': False,    
+    'JSON_EDITOR': True,
+    'SUPPORTED_SUBMIT_METHODS': ['get', 'post', 'put', 'delete', 'patch'],
 }
 
 INSTALLED_APPS = [
