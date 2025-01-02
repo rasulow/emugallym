@@ -78,6 +78,18 @@ class UsersAPIView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
     
+    
+class UserDetailAPIView(generics.RetrieveAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    lookup_field = 'id'
+    
+    @swagger_auto_schema(tags=['Authentication'])
+    def get(self, request, id, *args, **kwargs):
+        return super().get(request, id, *args, **kwargs)
+    
+    
 
 # class DemoView(APIView):
 #     # authentication_classes=[JWTAuthentication]
