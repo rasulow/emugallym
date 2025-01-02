@@ -70,7 +70,7 @@ class LogoutBlacklistTokenUpdateView(APIView):
         
         
 class UsersAPIView(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     queryset = User.objects.all()
     serializer_class = UserSerializer
     
