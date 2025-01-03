@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.utils.text import slugify
 import os
@@ -16,7 +17,7 @@ class Category(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(str(uuid.uuid4()))
         super().save(*args, **kwargs)
     
 
@@ -35,7 +36,7 @@ class Course(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(str(uuid.uuid4()))
         super().save(*args, **kwargs)
     
     
@@ -53,7 +54,7 @@ class Topic(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(str(uuid.uuid4()))
         super().save(*args, **kwargs)
     
     
@@ -74,7 +75,7 @@ class Lesson(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(str(uuid.uuid4()))
         super().save(*args, **kwargs)
         
         
