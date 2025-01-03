@@ -4,6 +4,7 @@ from . import views
 
 
 router = DefaultRouter()
+router.register(r'category', views.CategoryViewSet)
 router.register(r'courses', views.CourseViewSet)
 router.register(r'topics', views.TopicViewSet)
 router.register(r'lesson', views.LessonViewSet)

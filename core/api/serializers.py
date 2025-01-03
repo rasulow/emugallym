@@ -4,10 +4,16 @@ from django.conf import settings
 from core import models
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Category
+        fields = ('id', 'title', 'order', 'slug', 'is_active',)
+        
+
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Course
-        fields = ('id', 'title', 'description', 'user', 'price', 'is_active',)
+        fields = ('id', 'title', 'description', 'user', 'price', 'slug', 'is_active',)
         
     def validate_user(self, value):
         response = requests.get(f'{settings.USERS_SERVICE_URL}/api/users/{value}/')
@@ -19,10 +25,10 @@ class CourseSerializer(serializers.ModelSerializer):
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Topic
-        fields = ('id', 'title', 'course', 'order', 'is_active',)
+        fields = ('id', 'title', 'course', 'order', 'slug', 'is_active',)
 
 
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Lesson
-        fields = ('id', 'title', 'topic', 'course', 'order', 'material', 'is_active',)
+        fields = ('id', 'title', 'topic', 'course', 'order', 'material', 'slug', 'is_active',)
