@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 import os
 
 
@@ -12,6 +13,11 @@ class Category(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
     
 
 class Course(models.Model):
@@ -27,6 +33,11 @@ class Course(models.Model):
     def __str__(self):
         return self.title
     
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+    
     
 class Topic(models.Model):
     title = models.CharField(max_length=255)
@@ -39,6 +50,11 @@ class Topic(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
     
     
 class Lesson(models.Model):
@@ -55,11 +71,20 @@ class Lesson(models.Model):
     def __str__(self):
         return self.title
     
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+        
+        
     def delete(self, *args, **kwargs):
         if self.material:
             if os.path.isfile(self.material.path):
                 os.remove(self.material.path)
         super().delete(*args, **kwargs) 
+        
+    
     
 
     
