@@ -25,6 +25,7 @@ class Course(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     user = models.IntegerField()
+    category = models.ManyToManyField(Category, blank=True, null=True)
     price = models.FloatField()
     slug = models.SlugField(max_length=255, unique=True, db_index=True)
     is_active = models.BooleanField(default=False)
