@@ -1,6 +1,8 @@
 from rest_framework import viewsets, filters
 from rest_framework.parsers import MultiPartParser, FormParser
 from django_filters.rest_framework import DjangoFilterBackend 
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from core import models
 from . import serializers
 
@@ -14,7 +16,9 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = models.Course.objects.all()
     serializer_class = serializers.CourseSerializer
+    parser_classes = (MultiPartParser, FormParser)
     lookup_field = 'slug'
+
 
 
 class TopicViewSet(viewsets.ModelViewSet):

@@ -12,12 +12,15 @@ class CategorySerializer(serializers.ModelSerializer):
         
 
 class CourseSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(many=True)
+    # category = CategorySerializer(many=True)
     
     class Meta:
         model = models.Course
-        fields = ('id', 'title', 'description', 'user', 'category', 'price', 'slug', 'is_active',)
+        fields = ('id', 'title', 'description', 'user', 
+                  'category', 'thumbnail', 'price', 'discount', 'slug', 
+                  'is_active', 'paid', 'certified', 'start_date',)
         read_only_fields = ('slug',)
+        
         
         
     def validate_user(self, value):
