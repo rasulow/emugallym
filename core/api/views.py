@@ -49,4 +49,4 @@ class LessonViewSet(viewsets.ModelViewSet):
 class LevelViewSet(viewsets.ModelViewSet):
     queryset = models.Level.objects.all()
     serializer_class = serializers.LevelSerializer
-    lookup_field = 'slug'
+    lookup_field = 'id'
