@@ -44,6 +44,24 @@ class Level(models.Model):
         verbose_name = 'Level'
         verbose_name_plural = 'Levels'
         ordering = ['-created_at']
+        
+        
+class Language(models.Model):
+    title = models.CharField(max_length=100)
+    order = models.IntegerField()
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.title
+    
+    
+    class Meta:
+        db_table = 'languages'
+        verbose_name = 'Language'
+        verbose_name_plural = 'Languages'
+        ordering = ['-created_at']
     
 
 class Course(models.Model):
@@ -51,8 +69,10 @@ class Course(models.Model):
     description = models.TextField(blank=True, null=True)
     user = models.IntegerField()
     category = models.ManyToManyField(Category, blank=True, null=True)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE, blank=True, null=True)
     level = models.ForeignKey(Level, on_delete=models.CASCADE, blank=True, null=True)
     thumbnail = models.ImageField(upload_to='course/thumbnail/', blank=True, null=True)
+    preview_video = models.FileField(upload_to='course/preview/', blank=True, null=True)
     paid = models.BooleanField(default=False)
     price = models.FloatField()
     discount = models.FloatField(default=0)
@@ -81,7 +101,7 @@ class Course(models.Model):
     
 class Topic(models.Model):
     title = models.CharField(max_length=255)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name='topics', on_delete=models.CASCADE)
     order = models.IntegerField()
     slug = models.SlugField(max_length=255, unique=True, db_index=True)
     is_active = models.BooleanField(default=False)
@@ -106,7 +126,7 @@ class Topic(models.Model):
     
 class Lesson(models.Model):
     title = models.CharField(max_length=255)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, related_name='lessons', on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     material = models.FileField(upload_to='lessons/', blank=True, null=True)
     order = models.IntegerField()

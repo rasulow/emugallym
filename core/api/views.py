@@ -1,6 +1,7 @@
 from rest_framework import viewsets, filters
 from rest_framework.parsers import MultiPartParser, FormParser
 from django_filters.rest_framework import DjangoFilterBackend 
+from rest_framework.response import Response
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from core import models
@@ -21,6 +22,11 @@ class CourseViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['category__slug', 'paid', 'user']
     search_fields = ['title']
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = serializers.CourseDetailSerializer(instance)
+        return Response(serializer.data)
     
 
 
@@ -50,3 +56,10 @@ class LevelViewSet(viewsets.ModelViewSet):
     queryset = models.Level.objects.all()
     serializer_class = serializers.LevelSerializer
     lookup_field = 'id'
+    
+    
+class LanguageViewSet(viewsets.ModelViewSet):
+    queryset = models.Language.objects.all()
+    serializer_class = serializers.LanguageSerializer
+    lookup_field = 'id'
+    

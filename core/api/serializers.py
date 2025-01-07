@@ -8,7 +8,12 @@ class LevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Level
         fields = ('id', 'title', 'order', 'is_active',)
-        read_only_fields = ('slug',)
+        
+        
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Language
+        fields = ('id', 'title', 'order', 'is_active',)
         
         
 class CategorySerializer(serializers.ModelSerializer):
@@ -16,14 +21,30 @@ class CategorySerializer(serializers.ModelSerializer):
         model = models.Category
         fields = ('id', 'title', 'order', 'slug', 'is_active',)
         read_only_fields = ('slug',)
+     
         
-
+class LessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Lesson
+        fields = ('id', 'title', 'topic', 'course', 'order', 'material', 'slug', 'is_active',)
+        read_only_fields = ('slug',)    
+        
+        
+class TopicSerializer(serializers.ModelSerializer):
+    lessons = LessonSerializer(many=True)
+    
+    class Meta:
+        model = models.Topic
+        fields = ('id', 'title', 'course', 'order', 'lessons', 'slug', 'is_active',)
+        read_only_fields = ('slug',)
+        
+        
 class CourseSerializer(serializers.ModelSerializer):
     # category = CategorySerializer(many=True)
     
     class Meta:
         model = models.Course
-        fields = ('id', 'title', 'description', 'user', 'level',
+        fields = ('id', 'title', 'description', 'user', 'level', 'language',
                   'category', 'thumbnail', 'price', 'discount', 'slug', 
                   'is_active', 'paid', 'certified', 'start_date',)
         read_only_fields = ('slug',)
@@ -37,18 +58,15 @@ class CourseSerializer(serializers.ModelSerializer):
         return value
     
     
-class TopicSerializer(serializers.ModelSerializer):
+class CourseDetailSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(many=True)
+    topics = TopicSerializer(many=True)
+    level = LevelSerializer()
+    language = LanguageSerializer()
+    
     class Meta:
-        model = models.Topic
-        fields = ('id', 'title', 'course', 'order', 'slug', 'is_active',)
+        model = models.Course
+        fields = ('id', 'title', 'description', 'user', 'level', 'language',
+                  'category', 'thumbnail', 'preview_video', 'price', 'discount', 'slug',
+                  'is_active', 'paid', 'certified', 'start_date', 'topics',)
         read_only_fields = ('slug',)
-        
-
-
-class LessonSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Lesson
-        fields = ('id', 'title', 'topic', 'course', 'order', 'material', 'slug', 'is_active',)
-        read_only_fields = ('slug',)
-        
-        
