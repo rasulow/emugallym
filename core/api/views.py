@@ -18,6 +18,10 @@ class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CourseSerializer
     parser_classes = (MultiPartParser, FormParser)
     lookup_field = 'slug'
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['category__slug', 'paid', 'user']
+    search_fields = ['title']
+    
 
 
 
@@ -40,3 +44,9 @@ class LessonViewSet(viewsets.ModelViewSet):
     filterset_fields = ['course__slug', 'topic__slug']
     search_fields = ['title']
     ordering_fields = ['order', 'created_at']
+    
+    
+class LevelViewSet(viewsets.ModelViewSet):
+    queryset = models.Level.objects.all()
+    serializer_class = serializers.LevelSerializer
+    lookup_field = 'slug'

@@ -19,6 +19,31 @@ class Category(models.Model):
         if not self.slug:
             self.slug = slugify(str(uuid.uuid4()))
         super().save(*args, **kwargs)
+        
+        
+    class Meta:
+        db_table = 'category'
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+        ordering = ['-created_at']
+        
+        
+class Level(models.Model):
+    title = models.CharField(max_length=100)
+    order = models.IntegerField()
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.title
+    
+    
+    class Meta:
+        db_table = 'level'
+        verbose_name = 'Level'
+        verbose_name_plural = 'Levels'
+        ordering = ['-created_at']
     
 
 class Course(models.Model):
@@ -26,6 +51,7 @@ class Course(models.Model):
     description = models.TextField(blank=True, null=True)
     user = models.IntegerField()
     category = models.ManyToManyField(Category, blank=True, null=True)
+    level = models.ForeignKey(Level, on_delete=models.CASCADE, blank=True, null=True)
     thumbnail = models.ImageField(upload_to='course/thumbnail/', blank=True, null=True)
     paid = models.BooleanField(default=False)
     price = models.FloatField()
@@ -44,6 +70,13 @@ class Course(models.Model):
         if not self.slug:
             self.slug = slugify(str(uuid.uuid4()))
         super().save(*args, **kwargs)
+        
+        
+    class Meta:
+        db_table = 'course'
+        verbose_name = 'Course'
+        verbose_name_plural = 'Courses'
+        ordering = ['-created_at']
     
     
 class Topic(models.Model):
@@ -62,6 +95,13 @@ class Topic(models.Model):
         if not self.slug:
             self.slug = slugify(str(uuid.uuid4()))
         super().save(*args, **kwargs)
+        
+    
+    class Meta:
+        db_table = 'topic'
+        verbose_name = 'Topic'
+        verbose_name_plural = 'Topics'
+        ordering = ['-created_at']
     
     
 class Lesson(models.Model):
@@ -90,6 +130,13 @@ class Lesson(models.Model):
             if os.path.isfile(self.material.path):
                 os.remove(self.material.path)
         super().delete(*args, **kwargs) 
+        
+        
+    class Meta:
+        db_table = 'lesson'
+        verbose_name = 'Lesson'
+        verbose_name_plural = 'Lessons'
+        ordering = ['-created_at']
         
     
     

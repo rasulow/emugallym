@@ -4,6 +4,13 @@ from django.conf import settings
 from core import models
 
 
+class LevelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Level
+        fields = ('id', 'title', 'order', 'is_active',)
+        read_only_fields = ('slug',)
+        
+        
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Category
@@ -16,7 +23,7 @@ class CourseSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.Course
-        fields = ('id', 'title', 'description', 'user', 
+        fields = ('id', 'title', 'description', 'user', 'level',
                   'category', 'thumbnail', 'price', 'discount', 'slug', 
                   'is_active', 'paid', 'certified', 'start_date',)
         read_only_fields = ('slug',)
@@ -43,4 +50,5 @@ class LessonSerializer(serializers.ModelSerializer):
         model = models.Lesson
         fields = ('id', 'title', 'topic', 'course', 'order', 'material', 'slug', 'is_active',)
         read_only_fields = ('slug',)
+        
         
