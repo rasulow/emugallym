@@ -62,9 +62,10 @@ class Book(models.Model):
     cover = models.ImageField(upload_to='covers/')
     pages = models.IntegerField(blank=True, null=True)  # Number of printed pages
     reading_time = models.CharField(max_length=50, blank=True, null=True)  # Estimated reading time
-    published_year = models.IntegerField(blank=True, null=True)  # Year of publication
+    edition_year = models.IntegerField(blank=True, null=True)  # Year of publication
     age_restriction = models.CharField(max_length=10, blank=True, null=True)  # Age restriction (e.g., "16+")
     date_of_writing = models.DateField(blank=True, null=True)  # Date the book was written
+    published_at = models.DateField(blank=True, null=True)  # Date the book was written
     isbn = models.CharField(max_length=20, blank=True, null=True)  # ISBN (EAN) number
     translator = models.CharField(max_length=255, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
