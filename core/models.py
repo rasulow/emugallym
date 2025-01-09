@@ -80,16 +80,17 @@ class Book(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
         
+        # Handle file and cover renaming before saving
         if self.cover:
             filename = '{}.{}'.format(str(uuid.uuid4()), self.cover.name.split('.')[-1])
             self.cover.name = os.path.join('covers', filename)
-        
+
         if self.file:
             filename = '{}.{}'.format(str(uuid.uuid4()), self.file.name.split('.')[-1])
             self.file.name = os.path.join('books', filename)
-        
+
+        # Now save the instance
         super().save(*args, **kwargs)
         
     def book(self):

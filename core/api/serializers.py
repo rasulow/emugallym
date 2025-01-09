@@ -18,8 +18,9 @@ class GenreSerializer(serializers.ModelSerializer):
         read_only_fields = ('slug', 'children')
         
     def get_children(self, obj):
-        if obj.children.exists():
-            return GenreSerializer(obj.children.all(), many=True).data
+        children = obj.genre_set.all()
+        if children.exists():
+            return GenreSerializer(children, many=True).data 
         return None
     
     
