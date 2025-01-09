@@ -36,7 +36,7 @@ class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Topic
         fields = ('id', 'title', 'course', 'order', 'lessons', 'slug', 'is_active',)
-        read_only_fields = ('slug',)
+        read_only_fields = ('slug', 'lessons')
         
         
 class CourseSerializer(serializers.ModelSerializer):
