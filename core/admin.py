@@ -27,7 +27,7 @@ class TagAdmin(ModelAdmin):
     
 @admin.register(models.Book)
 class BookAdmin(ModelAdmin):
-    list_display = ('title', 'pages', 'book_size', 'ext', 'is_active')
+    list_display = ('title', 'pages', 'paid', 'book_size', 'ext', 'is_active')
     list_filter = ('genre', 'is_active', 'created_at', 'updated_at')
     search_fields = ('title', 'author__fullname', 'genre__title')
     

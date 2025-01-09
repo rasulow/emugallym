@@ -29,9 +29,9 @@ class BookSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.Book
-        fields = ('title', 'description', 'authors', 'genres', 'tags', 'file', 'cover', 'pages', 
-                  'reading_time', 'edition_year', 'published_at', 'age_restriction', 
-                  'date_of_writing', 'isbn', 'translator', 'book', 'img', 'ext', 'book_size', 'order', 'slug', 
-                  'is_active')
+        fields = ('title', 'description', 'authors', 'genres', 'tags', 'file', 'cover', 'paid', 
+                  'pages', 'reading_time', 'edition_year', 'published_at', 'age_restriction', 
+                  'date_of_writing', 'isbn', 'translator', 'book', 'img', 'ext', 'book_size', 
+                  'order', 'slug', 'is_active')
         read_only_fields = ('slug', 'created_at', 'updated_at')
     

@@ -83,6 +83,7 @@ class Book(models.Model):
     tag = models.ManyToManyField(Tag)
     file = models.FileField(upload_to='books/')
     cover = models.ImageField(upload_to='covers/')
+    paid = models.BooleanField(default=False)
     pages = models.IntegerField(blank=True, null=True)
     reading_time = models.CharField(max_length=50, blank=True, null=True)
     edition_year = models.IntegerField(blank=True, null=True) 
