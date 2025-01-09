@@ -30,7 +30,6 @@ class Author(models.Model):
     
 class Genre(models.Model):
     title = models.CharField(max_length=255)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     is_active = models.BooleanField(default=True)
@@ -56,12 +55,18 @@ class Book(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     author = models.ManyToManyField(Author)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    genre = models.ManyToManyField(Genre)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.IntegerField(default=0)
     file = models.FileField(upload_to='books/')
     cover = models.ImageField(upload_to='covers/')
-    published_at = models.DateField(blank=True, null=True)
+    pages = models.IntegerField(blank=True, null=True)  # Number of printed pages
+    reading_time = models.CharField(max_length=50, blank=True, null=True)  # Estimated reading time
+    published_year = models.IntegerField(blank=True, null=True)  # Year of publication
+    age_restriction = models.CharField(max_length=10, blank=True, null=True)  # Age restriction (e.g., "16+")
+    date_of_writing = models.DateField(blank=True, null=True)  # Date the book was written
+    isbn = models.CharField(max_length=20, blank=True, null=True)  # ISBN (EAN) number
+    translator = models.CharField(max_length=255, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     is_active = models.BooleanField(default=True)
@@ -107,10 +112,10 @@ class Book(models.Model):
         return self.price - (self.price * self.discount / 100)
     
     def authors(self):
-        return ', '.join([str(author) for author in self.author.all()])
+        return [str(author) for author in self.author.all()]
     
     def genres(self):
-        return self.genre.title
+        return [str(genre) for genre in self.genre.all()]
     
     def book_size(self):
         size_in_mb = self.file.size / (1024 * 1024)

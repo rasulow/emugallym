@@ -19,8 +19,7 @@ class GenreAdmin(ModelAdmin):
     
 @admin.register(models.Book)
 class BookAdmin(ModelAdmin):
-    list_display = ('title', 'authors', 'genre', 'price', 'published_at', 'book_size', 
-                    'ext', 'order', 'is_active', 'created_at', 'updated_at')
+    list_display = ('title', 'price', 'book_size', 'ext', 'is_active')
     list_filter = ('genre', 'is_active', 'created_at', 'updated_at')
     search_fields = ('title', 'author__fullname', 'genre__title')
     
