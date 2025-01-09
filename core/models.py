@@ -51,22 +51,45 @@ class Genre(models.Model):
         super().save(*args, **kwargs)
         
         
+class Tag(models.Model):
+    title = models.CharField(max_length=255)
+    order = models.IntegerField(blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'tag'
+        verbose_name = 'Tag'
+        verbose_name_plural = 'Tags'
+        ordering = ['order']
+        
+    def __str__(self):
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+        
+        
+        
 class Book(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     author = models.ManyToManyField(Author)
     genre = models.ManyToManyField(Genre)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    discount = models.IntegerField(default=0)
+    tag = models.ManyToManyField(Tag)
     file = models.FileField(upload_to='books/')
     cover = models.ImageField(upload_to='covers/')
-    pages = models.IntegerField(blank=True, null=True)  # Number of printed pages
-    reading_time = models.CharField(max_length=50, blank=True, null=True)  # Estimated reading time
-    edition_year = models.IntegerField(blank=True, null=True)  # Year of publication
-    age_restriction = models.CharField(max_length=10, blank=True, null=True)  # Age restriction (e.g., "16+")
-    date_of_writing = models.DateField(blank=True, null=True)  # Date the book was written
-    published_at = models.DateField(blank=True, null=True)  # Date the book was written
-    isbn = models.CharField(max_length=20, blank=True, null=True)  # ISBN (EAN) number
+    pages = models.IntegerField(blank=True, null=True)
+    reading_time = models.CharField(max_length=50, blank=True, null=True)
+    edition_year = models.IntegerField(blank=True, null=True) 
+    age_restriction = models.CharField(max_length=10, blank=True, null=True)
+    date_of_writing = models.DateField(blank=True, null=True)
+    published_at = models.DateField(blank=True, null=True)
+    isbn = models.CharField(max_length=20, blank=True, null=True)
     translator = models.CharField(max_length=255, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
@@ -109,14 +132,14 @@ class Book(models.Model):
             return self.cover.url
         return None
     
-    def price_discount(self):
-        return self.price - (self.price * self.discount / 100)
-    
     def authors(self):
         return [str(author) for author in self.author.all()]
     
     def genres(self):
         return [str(genre) for genre in self.genre.all()]
+    
+    def tags(self):
+        return [str(tag) for tag in self.tag.all()]
     
     def book_size(self):
         size_in_mb = self.file.size / (1024 * 1024)

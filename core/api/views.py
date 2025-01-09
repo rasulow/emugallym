@@ -26,6 +26,16 @@ class GenreViewSet(viewsets.ModelViewSet):
     search_fields = ['title']
     filterset_fields = ['is_active', 'created_at', 'updated_at']
     ordering_fields = ['order', 'created_at', 'updated_at']
+
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = models.Tag.objects.all()
+    serializer_class = serializers.TagSerializer
+    lookup_field = 'slug'
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['title']
+    filterset_fields = ['is_active', 'created_at', 'updated_at']
+    ordering_fields = ['order', 'created_at', 'updated_at']
     
     
 class BookViewSet(viewsets.ModelViewSet):
