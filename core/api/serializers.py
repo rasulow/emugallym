@@ -2,14 +2,14 @@ from rest_framework import serializers
 from core import models
 
 
-class AuthorSerializers(serializers.ModelSerializer):
+class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Author
         fields = ('id', 'fullname', 'biography', 'order', 'slug', 'is_active')
         read_only_fields = ('slug',)
         
 
-class GenreSerializers(serializers.ModelSerializer):
+class GenreSerializer(serializers.ModelSerializer):
     children = serializers.SerializerMethodField()
     
     class Meta:
@@ -19,21 +19,17 @@ class GenreSerializers(serializers.ModelSerializer):
         
     def get_children(self, obj):
         if obj.children.exists():
-            return GenreSerializers(obj.children.all(), many=True).data
+            return GenreSerializer(obj.children.all(), many=True).data
         return None
     
     
-class BookSerializers(serializers.ModelSerializer):
-    genre = GenreSerializers()
+class BookSerializer(serializers.ModelSerializer):
+    # genres = GenreSerializer()
     
     class Meta:
         model = models.Book
         fields = ('title', 'description', 'authors', 'genres', 'price', 
                   'discount', 'price_discount', 'file', 'cover', 'published_at', 
                   'book', 'img', 'ext', 'book_size', 'order', 'slug', 'is_active')
-        read_only_fields = ('id', 'title', 'description', 'authors', 'genres', 'price', 
-                            'discount', 'price_discount', 'published_at', 'slug', 'book', 
-                            'img', 'ext', 'book_size', 'order', 'is_active')
-        write_only_fields = ('title', 'description', 'author', 'genre', 'price', 
-                             'discount', 'published_at', 'file', 'cover', 'order', 'is_active')
+        read_only_fields = ('slug', 'created_at', 'updated_at')
     
