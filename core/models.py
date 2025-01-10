@@ -123,16 +123,6 @@ class Book(models.Model):
 
         # Now save the instance
         super().save(*args, **kwargs)
-        
-    def book(self):
-        if self.file:
-            return self.file.url
-        return None
-    
-    def img(self):
-        if self.cover:
-            return self.cover.url
-        return None
     
     def authors(self):
         return [str(author) for author in self.author.all()]
