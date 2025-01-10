@@ -7,6 +7,7 @@ import uuid
 class Author(models.Model):
     fullname = models.CharField(max_length=255)
     biography = models.TextField(blank=True, null=True)
+    img = models.ImageField(upload_to='authors/', blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     is_active = models.BooleanField(default=True)
@@ -24,7 +25,7 @@ class Author(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.fullname)
+            self.slug = slugify(str(uuid.uuid4()))
         super().save(*args, **kwargs)
         
     
@@ -47,7 +48,7 @@ class Genre(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(str(uuid.uuid4()))
         super().save(*args, **kwargs)
         
         
@@ -70,7 +71,7 @@ class Tag(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(str(uuid.uuid4()))
         super().save(*args, **kwargs)
         
         
@@ -78,9 +79,9 @@ class Tag(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    author = models.ManyToManyField(Author)
-    genre = models.ManyToManyField(Genre)
-    tag = models.ManyToManyField(Tag)
+    author = models.ManyToManyField(Author, blank=True, null=True)
+    genre = models.ManyToManyField(Genre, blank=True, null=True)
+    tag = models.ManyToManyField(Tag, blank=True, null=True)
     file = models.FileField(upload_to='books/')
     cover = models.ImageField(upload_to='covers/')
     paid = models.BooleanField(default=False)
@@ -109,7 +110,7 @@ class Book(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(str(uuid.uuid4()))
         
         # Handle file and cover renaming before saving
         if self.cover:

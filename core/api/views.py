@@ -12,6 +12,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
     queryset = models.Author.objects.all()
     serializer_class = serializers.AuthorSerializer
     lookup_field = 'slug'
+    parser_classes = (MultiPartParser, FormParser)
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['fullname']
     filterset_fields = ['is_active', 'created_at', 'updated_at']

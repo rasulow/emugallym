@@ -5,7 +5,7 @@ from core import models
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Author
-        fields = ('id', 'fullname', 'biography', 'order', 'slug', 'is_active')
+        fields = ('id', 'fullname', 'biography', 'img', 'order', 'slug', 'is_active')
         read_only_fields = ('slug',)
         
 
