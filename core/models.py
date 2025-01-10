@@ -5,7 +5,7 @@ import uuid
 
 
 class Author(models.Model):
-    fullname = models.CharField(max_length=255)
+    fullname = models.CharField(max_length=255, unique=True)
     biography = models.TextField(blank=True, null=True)
     img = models.ImageField(upload_to='authors/', blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
@@ -30,7 +30,7 @@ class Author(models.Model):
         
     
 class Genre(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, unique=True)
     order = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     is_active = models.BooleanField(default=True)
@@ -53,7 +53,7 @@ class Genre(models.Model):
         
         
 class Tag(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, unique=True)
     order = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     is_active = models.BooleanField(default=True)
