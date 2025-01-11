@@ -35,9 +35,15 @@ class UserManager(BaseUserManager):
     
     
 class User(AbstractBaseUser, PermissionsMixin):
+    USER_TYPE = (
+        ('instructor', 'Instructor'),
+        ('student', 'Student'),
+    )
+    
     username = models.CharField(max_length=30, unique=True, blank=True, null=True)
     email = models.EmailField(unique=True)
     otp = models.CharField(max_length=10, null=True, blank=True)
+    type = models.CharField(max_length=10, choices=USER_TYPE, null=True, blank=True)
     first_name = models.CharField(max_length=30, null=True, blank=True)
     last_name = models.CharField(max_length=30, null=True, blank=True)
     middle_name = models.CharField(max_length=30, null=True, blank=True)
