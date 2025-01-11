@@ -8,8 +8,8 @@ class Author(models.Model):
     fullname = models.CharField(max_length=255, unique=True)
     biography = models.TextField(blank=True, null=True)
     img = models.ImageField(upload_to='authors/', blank=True, null=True)
-    order = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+    order = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -31,8 +31,8 @@ class Author(models.Model):
     
 class Genre(models.Model):
     title = models.CharField(max_length=255, unique=True)
-    order = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+    order = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -54,8 +54,8 @@ class Genre(models.Model):
         
 class Tag(models.Model):
     title = models.CharField(max_length=255, unique=True)
-    order = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+    order = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -93,8 +93,8 @@ class Book(models.Model):
     published_at = models.DateField(blank=True, null=True)
     isbn = models.CharField(max_length=20, blank=True, null=True)
     translator = models.CharField(max_length=255, blank=True, null=True)
-    order = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+    order = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -112,7 +112,6 @@ class Book(models.Model):
         if not self.slug:
             self.slug = slugify(str(uuid.uuid4()))
         
-        # Handle file and cover renaming before saving
         if self.cover:
             filename = '{}.{}'.format(str(uuid.uuid4()), self.cover.name.split('.')[-1])
             self.cover.name = os.path.join('covers', filename)
@@ -121,7 +120,6 @@ class Book(models.Model):
             filename = '{}.{}'.format(str(uuid.uuid4()), self.file.name.split('.')[-1])
             self.file.name = os.path.join('books', filename)
 
-        # Now save the instance
         super().save(*args, **kwargs)
     
     def authors(self):
