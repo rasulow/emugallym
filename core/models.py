@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password, is_password_usable
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.utils.text import slugify
+import uuid
 
 class UserManager(BaseUserManager):
     
@@ -34,8 +36,15 @@ class UserManager(BaseUserManager):
     
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    username = None
     otp = models.CharField(max_length=10, null=True, blank=True)
+    first_name = models.CharField(max_length=30, null=True, blank=True)
+    last_name = models.CharField(max_length=30, null=True, blank=True)
+    middle_name = models.CharField(max_length=30, null=True, blank=True)
+    biography = models.TextField(null=True, blank=True)
+    phone_number = models.CharField(max_length=30, null=True, blank=True)
+    img = models.ImageField(upload_to='profile/', blank=True, null=True)
+    thumbnail = models.ImageField(upload_to='profile-thumbnail/', blank=True, null=True)
+    slug = models.SlugField(max_length=250, unique=True, blank=True, null=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -53,4 +62,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     def save(self, *args, **kwargs):
         if not self.password.startswith('pbkdf2_sha256'):
             self.password = make_password(self.password)
+            
+        if not self.slug:
+            self.slug = slugify(str(uuid.uuid4()))
+            
         super().save(*args, **kwargs)
+        
+    def fullname(self):
+        return f"{self.first_name} {self.middle_name} {self.last_name}"
+        

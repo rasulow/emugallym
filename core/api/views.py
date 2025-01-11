@@ -9,6 +9,7 @@ from core.models import User
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.throttling import ScopedRateThrottle
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import viewsets
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -89,31 +90,10 @@ class UserDetailAPIView(generics.RetrieveAPIView):
     def get(self, request, id, *args, **kwargs):
         return super().get(request, id, *args, **kwargs)
     
-    
 
-# class DemoView(APIView):
-#     # authentication_classes=[JWTAuthentication]
-#     permission_classes = [permissions.IsAuthenticated]
-    
-    
-#     @swagger_auto_schema(tags=['Experiment'])
-#     def post(self,request):
-#         try:
-#             return Response("accessed")
-#         except Exception as e:
-#             print(e)
-#             return Response("")
-        
-        
-# class DemoView2(APIView):
-#     # authentication_classes=[JWTAuthentication]
-#     permission_classes = [permissions.IsAuthenticated]
-    
-#     @swagger_auto_schema(tags=['Experiment'])
-#     def post(self,request):
-#         try:
-#             return Response("accessed 2")
-#         except Exception as e:
-#             print(e)
-#             return Response("")
-        
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
+    # authentication_classes = [JWTAuthentication]
+    lookup_field = 'id'
