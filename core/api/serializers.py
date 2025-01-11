@@ -41,6 +41,7 @@ class TopicSerializer(serializers.ModelSerializer):
         
 class CourseSerializer(serializers.ModelSerializer):
     # category = CategorySerializer(many=True)
+    user = serializers.SerializerMethodField()
     
     class Meta:
         model = models.Course
@@ -56,6 +57,17 @@ class CourseSerializer(serializers.ModelSerializer):
         if response.status_code != 200:
             raise serializers.ValidationError('User not found')
         return value
+    
+    
+    def get_user(self, obj):
+        user_id = obj.user 
+        try:
+            response = requests.get(f"{settings.USERS_SERVICE_URL}/api/users/{user_id}")
+            if response.status_code == 200:
+                return response.json() 
+            return None
+        except requests.RequestException:
+            return None
     
     
 class CourseDetailSerializer(serializers.ModelSerializer):
