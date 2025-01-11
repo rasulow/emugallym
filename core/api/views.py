@@ -16,19 +16,22 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = models.Course.objects.all()
-    serializer_class = serializers.CourseSerializer
     parser_classes = (MultiPartParser, FormParser)
     lookup_field = 'slug'
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['category__slug', 'paid', 'user']
     search_fields = ['title']
     
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = serializers.CourseDetailSerializer(instance)
-        return Response(serializer.data)
-    
-
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return serializers.CourseDetailSerializer 
+        elif self.action == 'list':
+            return serializers.CourseListSerializer
+        elif self.action == 'create':
+            return serializers.CourseCreateSerializer
+        elif self.action == 'update' or self.action == 'partial_update':
+            return serializers.CourseCreateSerializer
+        return serializers.CourseDetailSerializer  
 
 
 class TopicViewSet(viewsets.ModelViewSet):

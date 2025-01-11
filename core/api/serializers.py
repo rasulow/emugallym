@@ -39,8 +39,25 @@ class TopicSerializer(serializers.ModelSerializer):
         read_only_fields = ('slug', 'lessons')
         
         
-class CourseSerializer(serializers.ModelSerializer):
-    # category = CategorySerializer(many=True)
+class CourseCreateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = models.Course
+        fields = ('id', 'title', 'description', 'user', 'level', 'language',
+                  'category', 'thumbnail', 'price', 'discount', 'slug', 
+                  'is_active', 'paid', 'certified', 'start_date',)
+        read_only_fields = ('slug',)
+        
+        
+        
+    def validate_user(self, value):
+        response = requests.get(f'{settings.USERS_SERVICE_URL}/api/user/{value}/')
+        if response.status_code != 200:
+            raise serializers.ValidationError('User not found')
+        return value
+    
+    
+class CourseListSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
     
     class Meta:
@@ -53,7 +70,7 @@ class CourseSerializer(serializers.ModelSerializer):
         
         
     def validate_user(self, value):
-        response = requests.get(f'{settings.USERS_SERVICE_URL}/api/users/{value}/')
+        response = requests.get(f'{settings.USERS_SERVICE_URL}/api/user/{value}/')
         if response.status_code != 200:
             raise serializers.ValidationError('User not found')
         return value
@@ -62,13 +79,14 @@ class CourseSerializer(serializers.ModelSerializer):
     def get_user(self, obj):
         user_id = obj.user 
         try:
-            response = requests.get(f"{settings.USERS_SERVICE_URL}/api/users/{user_id}")
+            response = requests.get(f"{settings.USERS_SERVICE_URL}/api/user/{user_id}")
             if response.status_code == 200:
                 return response.json() 
             return None
         except requests.RequestException:
             return None
-    
+        
+        
     
 class CourseDetailSerializer(serializers.ModelSerializer):
     category = CategorySerializer(many=True)
@@ -87,7 +105,7 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     def get_user(self, obj):
         user_id = obj.user 
         try:
-            response = requests.get(f"{settings.USERS_SERVICE_URL}/api/users/{user_id}")
+            response = requests.get(f"{settings.USERS_SERVICE_URL}/api/user/{user_id}")
             if response.status_code == 200:
                 return response.json() 
             return None
