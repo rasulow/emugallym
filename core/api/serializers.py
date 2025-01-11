@@ -75,6 +75,7 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     topics = TopicSerializer(many=True)
     level = LevelSerializer()
     language = LanguageSerializer()
+    user = serializers.SerializerMethodField()
     
     class Meta:
         model = models.Course
@@ -82,3 +83,13 @@ class CourseDetailSerializer(serializers.ModelSerializer):
                   'category', 'thumbnail', 'preview_video', 'price', 'discount', 'slug',
                   'is_active', 'paid', 'certified', 'start_date', 'topics',)
         read_only_fields = ('slug',)
+        
+    def get_user(self, obj):
+        user_id = obj.user 
+        try:
+            response = requests.get(f"{settings.USERS_SERVICE_URL}/api/users/{user_id}")
+            if response.status_code == 200:
+                return response.json() 
+            return None
+        except requests.RequestException:
+            return None
