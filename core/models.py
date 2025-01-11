@@ -35,6 +35,7 @@ class UserManager(BaseUserManager):
     
     
 class User(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(max_length=30, unique=True, blank=True, null=True)
     email = models.EmailField(unique=True)
     otp = models.CharField(max_length=10, null=True, blank=True)
     first_name = models.CharField(max_length=30, null=True, blank=True)
@@ -45,6 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     img = models.ImageField(upload_to='profile/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='profile-thumbnail/', blank=True, null=True)
     slug = models.SlugField(max_length=250, unique=True, blank=True, null=True)
+    order = models.IntegerField(null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
