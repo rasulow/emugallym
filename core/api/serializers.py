@@ -50,7 +50,7 @@ class ProfessionSerializer(serializers.ModelSerializer):
         read_only_fields = ['slug', 'created_at', 'updated_at'] 
     
 class UserSerializer(serializers.ModelSerializer):
-    profession = ProfessionSerializer()
+    profession = ProfessionSerializer(read_only=True)
     
     class Meta:
         model = User
