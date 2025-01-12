@@ -1,5 +1,6 @@
 from .serializers import (RegistrationSerializer, VerifyOTPSerializer, 
-                          ProfessionSerializer, MyTokenObtainPairSerializer, UserSerializer)
+                          ProfessionSerializer, MyTokenObtainPairSerializer,
+                          UserPostSerializer, UserGetSerializer)
 from rest_framework import generics, status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -74,7 +75,7 @@ class LogoutBlacklistTokenUpdateView(APIView):
 class UsersAPIView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserGetSerializer
     
     @swagger_auto_schema(tags=['Authentication'])
     def get(self, request, *args, **kwargs):
@@ -84,7 +85,7 @@ class UsersAPIView(generics.ListAPIView):
 class UserDetailAPIView(generics.RetrieveAPIView):
     permission_classes = [permissions.AllowAny]
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserGetSerializer
     lookup_field = 'id'
     
     @swagger_auto_schema(tags=['Authentication'])
@@ -94,10 +95,14 @@ class UserDetailAPIView(generics.RetrieveAPIView):
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
     # authentication_claes = [JWTAuthentication]
     lookup_field = 'id'
+    
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return UserPostSerializer  # Serializer for POST request (e.g., user creation)
+        return UserGetSerializer 
     
 
 class ProfessionViewSet(viewsets.ModelViewSet):

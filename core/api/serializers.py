@@ -49,8 +49,33 @@ class ProfessionSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'slug', 'order', 'is_active', 'created_at', 'updated_at']
         read_only_fields = ['slug', 'created_at', 'updated_at'] 
     
-class UserSerializer(serializers.ModelSerializer):
-    profession = ProfessionSerializer(read_only=True)
+class UserGetSerializer(serializers.ModelSerializer):
+    profession = ProfessionSerializer()
+    
+    class Meta:
+        model = User
+        fields = [
+                    'id', 
+                    'username', 
+                    'email', 
+                    'fullname', 
+                    'type', 
+                    'biography', 
+                    'first_name', 
+                    'last_name', 
+                    'middle_name',
+                    'profession', 
+                    'type', 
+                    'phone_number', 
+                    'img', 
+                    'thumbnail', 
+                    'slug', 
+                    'is_active', 
+                    'order'
+                ]
+        read_only_fields = ['slug', 'is_active']
+
+class UserPostSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
