@@ -128,10 +128,3 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
-UNFOLD = {
-    "SITE_TITLE": "Course Administrator",
-    "SITE_HEADER": "Course Service Administration",
-}
