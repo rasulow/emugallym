@@ -6,6 +6,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from core import models
 from . import serializers
+from .filters import CourseFilter
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -19,7 +20,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
     lookup_field = 'slug'
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['category__slug', 'paid', 'user']
+    filterset_class = CourseFilter
     search_fields = ['title']
     
     def get_serializer_class(self):
