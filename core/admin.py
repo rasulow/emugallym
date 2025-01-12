@@ -4,6 +4,12 @@ import requests
 from unfold.admin import ModelAdmin
 from . import models
 
+
+@admin.register(models.Category)
+class CategoryAdmin(ModelAdmin):
+    list_display = ('title', 'is_active', 'created_at', 'updated_at')
+    
+
 @admin.register(models.Course)
 class CourseAdmin(ModelAdmin):
     list_display = ('title', 'description', 'get_user', 'price', 'is_active', 'created_at', 'updated_at')
