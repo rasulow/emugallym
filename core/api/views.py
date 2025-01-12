@@ -101,7 +101,7 @@ class UserViewSet(viewsets.ModelViewSet):
     
     def get_serializer_class(self):
         if self.request.method == 'POST':
-            return UserPostSerializer  # Serializer for POST request (e.g., user creation)
+            return UserPostSerializer
         return UserGetSerializer 
     
 
