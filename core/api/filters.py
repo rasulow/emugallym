@@ -1,9 +1,15 @@
 import django_filters
 from core.models import Course
 
+class CharInFilter(django_filters.BaseInFilter, django_filters.CharFilter):
+    pass
+
+class NumberInFilter(django_filters.BaseInFilter, django_filters.NumberFilter):
+    pass
+
 class CourseFilter(django_filters.FilterSet):
-    category = django_filters.CharFilter(field_name='category__slug', lookup_expr='in')
-    user = django_filters.CharFilter(field_name='user__id', lookup_expr='in')
+    category = CharInFilter(field_name='category__slug', lookup_expr='in')
+    user = NumberInFilter(field_name='user__id', lookup_expr='in')
     paid = django_filters.BooleanFilter(field_name='paid')
 
     class Meta:
