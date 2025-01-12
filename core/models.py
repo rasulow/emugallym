@@ -7,8 +7,8 @@ import os
 class Category(models.Model):
     title = models.CharField(max_length=100)
     is_active = models.BooleanField(default=False)
-    slug = models.SlugField(max_length=255, unique=True, db_index=True)
-    order = models.IntegerField()
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+    order = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -30,7 +30,7 @@ class Category(models.Model):
         
 class Level(models.Model):
     title = models.CharField(max_length=100)
-    order = models.IntegerField()
+    order = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -48,7 +48,7 @@ class Level(models.Model):
         
 class Language(models.Model):
     title = models.CharField(max_length=100)
-    order = models.IntegerField()
+    order = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

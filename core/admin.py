@@ -8,6 +8,16 @@ from . import models
 @admin.register(models.Category)
 class CategoryAdmin(ModelAdmin):
     list_display = ('title', 'is_active', 'created_at', 'updated_at')
+
+
+@admin.register(models.Level)
+class LevelAdmin(ModelAdmin):
+    list_display = ('title', 'is_active', 'created_at', 'updated_at')
+
+
+@admin.register(models.Language)
+class LanguageAdmin(ModelAdmin):
+    list_display = ('title', 'is_active', 'created_at', 'updated_at')
     
 
 @admin.register(models.Course)
