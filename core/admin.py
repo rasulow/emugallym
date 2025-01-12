@@ -39,9 +39,9 @@ class CourseAdmin(ModelAdmin):
 
 @admin.register(models.Topic)
 class TopicAdmin(ModelAdmin):
-    list_display = ('title', 'course', 'order', 'is_active', 'created_at', 'updated_at')
+    list_display = ('title', 'course', 'order', 'is_active')
     
     
 @admin.register(models.Lesson)
 class LessonAdmin(ModelAdmin):
-    list_display = ('title', 'topic', 'course', 'order', 'is_active', 'created_at', 'updated_at')
+    list_display = ('title', 'topic', 'course', 'type', 'order', 'is_active')

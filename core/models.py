@@ -126,10 +126,15 @@ class Topic(models.Model):
     
     
 class Lesson(models.Model):
+    TYPES = (
+        ('video', 'Video'),
+        ('document', 'Document'),
+    )
     title = models.CharField(max_length=255)
     topic = models.ForeignKey(Topic, related_name='lessons', on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     material = models.FileField(upload_to='lessons/', blank=True, null=True)
+    type = models.CharField(max_length=10, choices=TYPES, default='video')
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=False)
