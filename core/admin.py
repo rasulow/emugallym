@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User
+from .models import User, Profession
 from django.contrib.auth.admin import UserAdmin
 from unfold.admin import ModelAdmin
 from . import forms
@@ -13,3 +13,14 @@ class UserAdmin(ModelAdmin):
     ordering = ['email']
 
 admin.site.register(User, UserAdmin)
+
+
+class ProfessionAdmin(ModelAdmin):
+    model = Profession
+    list_display = ['title', 'slug', 'order', 'is_active', 'created_at', 'updated_at']
+    list_filter = ['is_active']
+    search_fields = ['title']
+    ordering = ['order']
+
+admin.site.register(Profession, ProfessionAdmin)
+    

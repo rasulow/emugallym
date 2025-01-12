@@ -2,7 +2,7 @@ from django.urls import path, include
 from .views import (
     RegistrationAPIView, VerifyOTPAPIView, 
     LogoutBlacklistTokenUpdateView, MyTokenObtainPairView, 
-    UsersAPIView, UserDetailAPIView, UserViewSet
+    UsersAPIView, UserDetailAPIView, UserViewSet, ProfessionViewSet
 )
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -12,6 +12,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'user', UserViewSet)
+router.register(r'profession', ProfessionViewSet)
 
 urlpatterns = [
 

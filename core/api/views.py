@@ -1,11 +1,12 @@
-from .serializers import RegistrationSerializer, VerifyOTPSerializer, MyTokenObtainPairSerializer, UserSerializer
+from .serializers import (RegistrationSerializer, VerifyOTPSerializer, 
+                          ProfessionSerializer, MyTokenObtainPairSerializer, UserSerializer)
 from rest_framework import generics, status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from core.emails import *
-from core.models import User
+from core.models import User, Profession
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.throttling import ScopedRateThrottle
 from drf_yasg.utils import swagger_auto_schema
@@ -95,5 +96,12 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
-    # authentication_classes = [JWTAuthentication]
+    # authentication_claes = [JWTAuthentication]
     lookup_field = 'id'
+    
+
+class ProfessionViewSet(viewsets.ModelViewSet):
+    queryset = Profession.objects.all()
+    serializer_class = ProfessionSerializer
+    permission_classes = [permissions.AllowAny]
+    lookup_field = 'slug'

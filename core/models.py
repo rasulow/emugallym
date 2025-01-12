@@ -34,6 +34,30 @@ class UserManager(BaseUserManager):
 
     
     
+class Profession(models.Model):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=250, unique=True, blank=True, null=True)
+    order = models.IntegerField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(str(uuid.uuid4()))
+            
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        db_table = 'profession'
+        verbose_name = 'Profession'
+        verbose_name_plural = 'Professions'
+        ordering = ['order']
+    
+    
 class User(AbstractBaseUser, PermissionsMixin):
     USER_TYPE = (
         ('instructor', 'Instructor'),
@@ -48,6 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30, null=True, blank=True)
     middle_name = models.CharField(max_length=30, null=True, blank=True)
     biography = models.TextField(null=True, blank=True)
+    profession = models.ForeignKey(Profession, on_delete=models.SET_NULL, null=True, blank=True)
     phone_number = models.CharField(max_length=30, null=True, blank=True)
     img = models.ImageField(upload_to='profile/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='profile-thumbnail/', blank=True, null=True)

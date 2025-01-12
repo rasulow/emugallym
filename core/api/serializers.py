@@ -1,7 +1,7 @@
 from core.models import User
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from core.models import User as user
+from core.models import User, Profession
 
 
 
@@ -47,9 +47,32 @@ class VerifyOTPSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'fullname', 'type', 'biography', 
-                  'first_name', 'last_name', 'middle_name', 'phone_number', 
-                  'img', 'thumbnail', 'slug', 'is_active', 'type', 'order']
+        fields = [
+                    'id', 
+                    'username', 
+                    'email', 
+                    'fullname', 
+                    'type', 
+                    'biography', 
+                    'first_name', 
+                    'last_name', 
+                    'middle_name', 
+                    'type', 
+                    'phone_number', 
+                    'img', 
+                    'thumbnail', 
+                    'slug', 
+                    'is_active', 
+                    'order'
+                ]
         read_only_fields = ['slug', 'is_active']
     
     
+    
+class ProfessionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profession
+        fields = ['id', 'title', 'slug', 'order', 'is_active', 'created_at', 'updated_at']
+        read_only_fields = ['slug', 'created_at', 'updated_at']
+        
+        
