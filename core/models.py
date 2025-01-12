@@ -71,7 +71,7 @@ class Course(models.Model):
     short_description = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     learning_outcomes = RichTextField(blank=True, null=True)
-    requirements = RichTextField(blank=True, null=True)
+    requirements = models.TextField(blank=True, null=True)
     user = models.IntegerField()
     category = models.ManyToManyField(Category, blank=True, null=True)
     language = models.ForeignKey(Language, on_delete=models.CASCADE, blank=True, null=True)
