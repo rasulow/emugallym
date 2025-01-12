@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
+    'ckeditor',
+    'ckeditor_uploader',
     'core'
 ]
 
@@ -126,5 +128,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -2,6 +2,8 @@ import uuid
 from django.db import models
 from django.utils.text import slugify
 import os
+from ckeditor.fields import RichTextField
+
 
 
 class Category(models.Model):
@@ -66,7 +68,10 @@ class Language(models.Model):
 
 class Course(models.Model):
     title = models.CharField(max_length=100)
+    short_description = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    learning_outcomes = RichTextField(blank=True, null=True)
+    requirements = RichTextField(blank=True, null=True)
     user = models.IntegerField()
     category = models.ManyToManyField(Category, blank=True, null=True)
     language = models.ForeignKey(Language, on_delete=models.CASCADE, blank=True, null=True)
