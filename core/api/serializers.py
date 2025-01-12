@@ -42,9 +42,16 @@ class VerifyOTPSerializer(serializers.Serializer):
 
     email = serializers.EmailField()
     otp = serializers.CharField()
-    
+   
+class ProfessionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profession
+        fields = ['id', 'title', 'slug', 'order', 'is_active', 'created_at', 'updated_at']
+        read_only_fields = ['slug', 'created_at', 'updated_at'] 
     
 class UserSerializer(serializers.ModelSerializer):
+    profession = ProfessionSerializer()
+    
     class Meta:
         model = User
         fields = [
@@ -56,7 +63,8 @@ class UserSerializer(serializers.ModelSerializer):
                     'biography', 
                     'first_name', 
                     'last_name', 
-                    'middle_name', 
+                    'middle_name',
+                    'profession', 
                     'type', 
                     'phone_number', 
                     'img', 
@@ -69,10 +77,6 @@ class UserSerializer(serializers.ModelSerializer):
     
     
     
-class ProfessionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profession
-        fields = ['id', 'title', 'slug', 'order', 'is_active', 'created_at', 'updated_at']
-        read_only_fields = ['slug', 'created_at', 'updated_at']
+
         
         
