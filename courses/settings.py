@@ -51,8 +51,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'courses.urls'
 
-CORS_ALLOW_ALL_ORIGINS = True
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 TEMPLATES = [
     {
@@ -85,11 +84,11 @@ STORAGES = {
     'default': {
         'BACKEND': 'django.core.files.storage.FileSystemStorage',
         'OPTIONS': {
-            'location': os.path.join(BASE_DIR, 'media'),  # Path to media folder
+            'location': os.path.join(BASE_DIR, 'media'),  
         }
     },
     'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',  # WhiteNoise for static files
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage', 
     },
 }
 
@@ -120,13 +119,14 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
