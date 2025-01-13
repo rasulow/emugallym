@@ -98,7 +98,7 @@ class UserPostSerializer(serializers.ModelSerializer):
                     'is_active', 
                     'order'
                 ]
-        read_only_fields = ['slug', 'is_active']
+        read_only_fields = ['slug', 'is_active', 'fullname']
     
     
     
