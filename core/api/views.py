@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.parsers import MultiPartParser, FormParser
 from core.emails import *
 from core.models import User, Profession
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -96,6 +97,7 @@ class UserDetailAPIView(generics.RetrieveAPIView):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     permission_classes = [permissions.AllowAny]
+    parser_classes = (MultiPartParser, FormParser)
     # authentication_claes = [JWTAuthentication]
     lookup_field = 'id'
     
