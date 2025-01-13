@@ -33,6 +33,14 @@ class CourseViewSet(viewsets.ModelViewSet):
         elif self.action == 'update' or self.action == 'partial_update':
             return serializers.CourseCreateSerializer
         return serializers.CourseDetailSerializer  
+    
+    
+    def get_queryset(self):
+        queryset = models.Course.objects.all()
+
+        user_id = self.request.query_params.get('user')
+        if user_id:
+            queryset = queryset.filter(user=user_id)
 
 
 class TopicViewSet(viewsets.ModelViewSet):
