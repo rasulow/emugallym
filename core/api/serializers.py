@@ -98,8 +98,8 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.Course
-        fields = ('id', 'title', 'description', 'user', 'level', 'language',
-                  'category', 'thumbnail', 'preview_video', 'price', 'discount', 'slug',
+        fields = ('id', 'title', 'short_description', 'description', 'learning_outcomes', 'user', 'requirements', 
+                  'level', 'language', 'category', 'thumbnail', 'preview_video', 'price', 'discount', 'slug',
                   'is_active', 'paid', 'certified', 'start_date', 'topics',)
         read_only_fields = ('slug',)
         
