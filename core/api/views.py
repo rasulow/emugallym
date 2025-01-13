@@ -36,7 +36,6 @@ class CourseViewSet(viewsets.ModelViewSet):
     @swagger_auto_schema(
         operation_description="List courses with optional filtering",
         manual_parameters=[
-            # Define filter parameters explicitly
             openapi.Parameter(
                 'category',
                 openapi.IN_QUERY,
@@ -64,7 +63,7 @@ class CourseViewSet(viewsets.ModelViewSet):
             openapi.Parameter(
                 'ordering',
                 openapi.IN_QUERY,
-                description="Order the results (e.g., title)",
+                description="Order the results (e.g., order)",
                 type=openapi.TYPE_STRING,
             ),
         ]
@@ -75,17 +74,14 @@ class CourseViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = models.Course.objects.all()
 
-        # Filtering by category (using 'category__slug')
         category = self.request.query_params.get('category')
         if category:
             queryset = queryset.filter(category__slug__in=category.split(','))
 
-        # Filtering by paid status
         paid = self.request.query_params.get('paid')
         if paid is not None:
             queryset = queryset.filter(paid=paid.lower() == 'true')
 
-        # Filtering by user ID
         user = self.request.query_params.get('user')
         if user:
             queryset = queryset.filter(user=user)
