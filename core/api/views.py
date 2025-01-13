@@ -19,28 +19,78 @@ class CourseViewSet(viewsets.ModelViewSet):
     queryset = models.Course.objects.all()
     parser_classes = (MultiPartParser, FormParser)
     lookup_field = 'slug'
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_class = CourseFilter
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title']
-    
+
     def get_serializer_class(self):
         if self.action == 'retrieve':
-            return serializers.CourseDetailSerializer 
+            return serializers.CourseDetailSerializer
         elif self.action == 'list':
             return serializers.CourseListSerializer
         elif self.action == 'create':
             return serializers.CourseCreateSerializer
-        elif self.action == 'update' or self.action == 'partial_update':
+        elif self.action in ['update', 'partial_update']:
             return serializers.CourseCreateSerializer
-        return serializers.CourseDetailSerializer  
-    
-    
+        return serializers.CourseDetailSerializer
+
+    @swagger_auto_schema(
+        operation_description="List courses with optional filtering",
+        manual_parameters=[
+            # Define filter parameters explicitly
+            openapi.Parameter(
+                'category',
+                openapi.IN_QUERY,
+                description="Comma-separated list of categories to filter by",
+                type=openapi.TYPE_STRING,
+            ),
+            openapi.Parameter(
+                'paid',
+                openapi.IN_QUERY,
+                description="Filter by paid status (true/false)",
+                type=openapi.TYPE_BOOLEAN,
+            ),
+            openapi.Parameter(
+                'user',
+                openapi.IN_QUERY,
+                description="Filter by user ID",
+                type=openapi.TYPE_INTEGER,
+            ),
+            openapi.Parameter(
+                'search',
+                openapi.IN_QUERY,
+                description="Search by title",
+                type=openapi.TYPE_STRING,
+            ),
+            openapi.Parameter(
+                'ordering',
+                openapi.IN_QUERY,
+                description="Order the results (e.g., title)",
+                type=openapi.TYPE_STRING,
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
     def get_queryset(self):
         queryset = models.Course.objects.all()
 
-        user_id = self.request.query_params.get('user')
-        if user_id:
-            queryset = queryset.filter(user=user_id)
+        # Filtering by category (using 'category__slug')
+        category = self.request.query_params.get('category')
+        if category:
+            queryset = queryset.filter(category__slug__in=category.split(','))
+
+        # Filtering by paid status
+        paid = self.request.query_params.get('paid')
+        if paid is not None:
+            queryset = queryset.filter(paid=paid.lower() == 'true')
+
+        # Filtering by user ID
+        user = self.request.query_params.get('user')
+        if user:
+            queryset = queryset.filter(user=user)
+
+        return queryset
 
 
 class TopicViewSet(viewsets.ModelViewSet):
