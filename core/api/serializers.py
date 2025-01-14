@@ -26,8 +26,8 @@ class CategorySerializer(serializers.ModelSerializer):
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Lesson
-        fields = ('id', 'title', 'topic', 'course', 'order', 'material', 'type', 'slug', 'is_active',)
-        read_only_fields = ('slug',)    
+        fields = ('id', 'title', 'topic', 'course', 'order', 'material', 'type', 'video_duration', 'slug', 'is_active',)
+        read_only_fields = ('slug', 'video_duration',)    
         
         
 class TopicSerializer(serializers.ModelSerializer):

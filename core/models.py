@@ -3,6 +3,10 @@ from django.db import models
 from django.utils.text import slugify
 import os
 from ckeditor.fields import RichTextField
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+from moviepy.video.io.VideoFileClip import VideoFileClip
+
+
 
 
 
@@ -161,6 +165,20 @@ class Lesson(models.Model):
             if os.path.isfile(self.material.path):
                 os.remove(self.material.path)
         super().delete(*args, **kwargs) 
+        
+    def video_duration(self):
+        if self.type == 'video':
+            video_path = self.material.path
+            clip = VideoFileClip(video_path)
+            duration_in_seconds = clip.duration
+            
+            hours = int(duration_in_seconds // 3600)
+            minutes = int((duration_in_seconds % 3600) // 60)
+            seconds = int(duration_in_seconds % 60)
+            
+            if hours == 0:
+                return f'{minutes:02d}:{seconds:02d}'
+            return f'{hours:02d}:{minutes:02d}:{seconds:02d}'
         
         
     class Meta:
