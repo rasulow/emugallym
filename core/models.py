@@ -179,6 +179,7 @@ class Lesson(models.Model):
             if hours == 0:
                 return f'{minutes:02d}:{seconds:02d}'
             return f'{hours:02d}:{minutes:02d}:{seconds:02d}'
+        return None
         
         
     class Meta:
