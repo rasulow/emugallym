@@ -44,4 +44,4 @@ class TopicAdmin(ModelAdmin):
     
 @admin.register(models.Lesson)
 class LessonAdmin(ModelAdmin):
-    list_display = ('title', 'topic', 'course', 'type', 'order', 'is_active')
+    list_display = ('title', 'topic', 'course', 'type', 'video_duration', 'is_active')
