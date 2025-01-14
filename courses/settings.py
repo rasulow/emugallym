@@ -15,6 +15,7 @@ ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
+    'corsheaders',
     "unfold", 
     "unfold.contrib.filters", 
     "unfold.contrib.forms",
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
 USERS_SERVICE_URL = 'http://216.250.12.100:5000'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -47,6 +49,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://10.10.73.49:3000",
 ]
 
 ROOT_URLCONF = 'courses.urls'
