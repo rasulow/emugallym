@@ -144,6 +144,9 @@ class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     material = models.FileField(upload_to='lessons/', blank=True, null=True)
     type = models.CharField(max_length=10, choices=TYPES, default='video')
+    hours = models.IntegerField(default=0)
+    minutes = models.IntegerField(default=0)
+    seconds = models.IntegerField(default=0)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=False)
@@ -157,6 +160,19 @@ class Lesson(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(str(uuid.uuid4()))
+            
+        if self.type == 'video':
+            video_path = self.material.path
+            clip = VideoFileClip(video_path)
+            duration_in_seconds = clip.duration
+            
+            hours = int(duration_in_seconds // 3600)
+            minutes = int((duration_in_seconds % 3600) // 60)
+            seconds = int(duration_in_seconds % 60)
+            self.hours = hours
+            self.minutes = minutes
+            self.seconds = seconds
+            
         super().save(*args, **kwargs)
         
         
@@ -167,19 +183,9 @@ class Lesson(models.Model):
         super().delete(*args, **kwargs) 
         
     def video_duration(self):
-        if self.type == 'video':
-            video_path = self.material.path
-            clip = VideoFileClip(video_path)
-            duration_in_seconds = clip.duration
-            
-            hours = int(duration_in_seconds // 3600)
-            minutes = int((duration_in_seconds % 3600) // 60)
-            seconds = int(duration_in_seconds % 60)
-            
-            if hours == 0:
-                return f'{minutes:02d}:{seconds:02d}'
-            return f'{hours:02d}:{minutes:02d}:{seconds:02d}'
-        return None
+        if self.hours == 0:
+            return f'{self.minutes:02d}:{self.seconds:02d}'
+        return f'{self.hours:02d}:{self.minutes:02d}:{self.seconds:02d}'
         
         
     class Meta:
