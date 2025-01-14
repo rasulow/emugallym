@@ -5,6 +5,7 @@ import os
 from ckeditor.fields import RichTextField
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 from moviepy.video.io.VideoFileClip import VideoFileClip
+from .utils import normalize_time
 
 
 
@@ -176,27 +177,36 @@ class Lesson(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(str(uuid.uuid4()))
-            
+
         if self.type == 'video':
-            video_path = self.material.path
-            clip = VideoFileClip(video_path)
-            duration_in_seconds = clip.duration
-            
-            hours = int(duration_in_seconds // 3600)
-            minutes = int((duration_in_seconds % 3600) // 60)
-            seconds = int(duration_in_seconds % 60)
-            self.hours = hours
-            self.minutes = minutes
-            self.seconds = seconds
-            self.topic.hours += hours
-            self.topic.minutes += minutes
-            self.topic.seconds += seconds
-            self.topic.save()
-            self.course.hours += hours
-            self.course.minutes += minutes
-            self.course.seconds += seconds
-            self.course.save()
-            
+            try:
+                video_path = self.material.path
+                clip = VideoFileClip(video_path)
+                duration_in_seconds = clip.duration
+                
+                hours = int(duration_in_seconds // 3600)
+                minutes = int((duration_in_seconds % 3600) // 60)
+                seconds = int(duration_in_seconds % 60)
+                
+                self.hours, self.minutes, self.seconds = normalize_time(hours, minutes, seconds)
+                
+                self.topic.hours, self.topic.minutes, self.topic.seconds = normalize_time(
+                    self.topic.hours + self.hours,
+                    self.topic.minutes + self.minutes,
+                    self.topic.seconds + self.seconds
+                )
+                self.topic.save()
+
+                self.course.hours, self.course.minutes, self.course.seconds = normalize_time(
+                    self.course.hours + self.hours,
+                    self.course.minutes + self.minutes,
+                    self.course.seconds + self.seconds
+                )
+                self.course.save()
+
+            except Exception as e:
+                print(f"Error processing video: {e}")
+                
         super().save(*args, **kwargs)
         
         

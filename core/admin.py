@@ -23,7 +23,7 @@ class LanguageAdmin(ModelAdmin):
 
 @admin.register(models.Course)
 class CourseAdmin(ModelAdmin):
-    list_display = ('title', 'description', 'get_user', 'price', 'course_duration', 'is_active')
+    list_display = ('title', 'description', 'get_user', 'price', 'course_duration', 'order', 'is_active')
     exclude = ('created_at', 'updated_at', 'slug', 'hours', 'minutes', 'seconds')
     
     def get_user(self, obj):
@@ -42,11 +42,11 @@ class CourseAdmin(ModelAdmin):
 
 @admin.register(models.Topic)
 class TopicAdmin(ModelAdmin):
-    list_display = ('title', 'course', 'order', 'topic_duration', 'is_active')
+    list_display = ('title', 'course', 'topic_duration', 'order', 'is_active')
     exclude = ('created_at', 'updated_at', 'slug', 'hours', 'minutes', 'seconds')
     
     
 @admin.register(models.Lesson)
 class LessonAdmin(ModelAdmin):
-    list_display = ('title', 'topic', 'course', 'type', 'lesson_duration', 'is_active')
+    list_display = ('title', 'topic', 'course', 'type', 'lesson_duration', 'order', 'is_active')
     exclude = ('created_at', 'updated_at', 'slug', 'hours', 'minutes', 'seconds')
