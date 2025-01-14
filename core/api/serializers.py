@@ -26,8 +26,8 @@ class CategorySerializer(serializers.ModelSerializer):
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Lesson
-        fields = ('id', 'title', 'topic', 'course', 'order', 'material', 'type', 'video_duration', 'slug', 'is_active',)
-        read_only_fields = ('slug', 'video_duration',)    
+        fields = ('id', 'title', 'topic', 'course', 'order', 'material', 'type', 'lesson_duration', 'slug', 'is_active',)
+        read_only_fields = ('slug', 'lesson_duration',)    
         
         
 class TopicSerializer(serializers.ModelSerializer):
@@ -35,8 +35,8 @@ class TopicSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.Topic
-        fields = ('id', 'title', 'course', 'order', 'lessons', 'slug', 'is_active',)
-        read_only_fields = ('slug', 'lessons')
+        fields = ('id', 'title', 'course', 'order', 'topic_duration', 'lessons', 'slug', 'is_active',)
+        read_only_fields = ('slug', 'lessons', 'topic_duration',)
         
         
 class CourseCreateSerializer(serializers.ModelSerializer):
@@ -64,9 +64,9 @@ class CourseListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Course
         fields = ('id', 'title', 'short_description', 'description', 'learning_outcomes', 'user', 
-                  'requirements', 'level', 'language', 'category', 'thumbnail', 'price', 'discount', 
-                  'slug', 'is_active', 'paid', 'certified', 'start_date',)
-        read_only_fields = ('slug',)
+                  'requirements', 'level', 'language', 'category', 'thumbnail', 'price', 'discount',
+                  'course_duration', 'slug', 'is_active', 'paid', 'certified', 'start_date',)
+        read_only_fields = ('slug', 'course_duration')
         
         
         
@@ -99,9 +99,9 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Course
         fields = ('id', 'title', 'short_description', 'description', 'learning_outcomes', 'user', 'requirements', 
-                  'level', 'language', 'category', 'thumbnail', 'preview_video', 'price', 'discount', 'slug',
-                  'is_active', 'paid', 'certified', 'start_date', 'topics',)
-        read_only_fields = ('slug',)
+                  'level', 'language', 'category', 'thumbnail', 'preview_video', 'price', 'discount', 
+                  'course_duration', 'slug', 'is_active', 'paid', 'certified', 'start_date', 'topics',)
+        read_only_fields = ('slug', 'course_duration')
         
     def get_user(self, obj):
         user_id = obj.user 

@@ -87,6 +87,9 @@ class Course(models.Model):
     discount = models.FloatField(default=0)
     certified = models.BooleanField(default=False)
     start_date = models.DateTimeField(blank=True, null=True)
+    hours = models.IntegerField(default=0)
+    minutes = models.IntegerField(default=0)
+    seconds = models.IntegerField(default=0)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=False)
@@ -101,6 +104,11 @@ class Course(models.Model):
             self.slug = slugify(str(uuid.uuid4()))
         super().save(*args, **kwargs)
         
+    def course_duration(self):
+        if self.hours == 0:
+            return f'{self.minutes:02d}:{self.seconds:02d}'
+        return f'{self.hours:02d}:{self.minutes:02d}:{self.seconds:02d}'
+        
         
     class Meta:
         db_table = 'course'
@@ -112,6 +120,9 @@ class Course(models.Model):
 class Topic(models.Model):
     title = models.CharField(max_length=255)
     course = models.ForeignKey(Course, related_name='topics', on_delete=models.CASCADE)
+    hours = models.IntegerField(default=0)
+    minutes = models.IntegerField(default=0)
+    seconds = models.IntegerField(default=0)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=False)
@@ -125,6 +136,11 @@ class Topic(models.Model):
         if not self.slug:
             self.slug = slugify(str(uuid.uuid4()))
         super().save(*args, **kwargs)
+        
+    def topic_duration(self):
+        if self.hours == 0:
+            return f'{self.minutes:02d}:{self.seconds:02d}'
+        return f'{self.hours:02d}:{self.minutes:02d}:{self.seconds:02d}'
         
     
     class Meta:
@@ -172,6 +188,14 @@ class Lesson(models.Model):
             self.hours = hours
             self.minutes = minutes
             self.seconds = seconds
+            self.topic.hours += hours
+            self.topic.minutes += minutes
+            self.topic.seconds += seconds
+            self.topic.save()
+            self.course.hours += hours
+            self.course.minutes += minutes
+            self.course.seconds += seconds
+            self.course.save()
             
         super().save(*args, **kwargs)
         
@@ -182,7 +206,7 @@ class Lesson(models.Model):
                 os.remove(self.material.path)
         super().delete(*args, **kwargs) 
         
-    def video_duration(self):
+    def lesson_duration(self):
         if self.hours == 0:
             return f'{self.minutes:02d}:{self.seconds:02d}'
         return f'{self.hours:02d}:{self.minutes:02d}:{self.seconds:02d}'

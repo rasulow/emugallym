@@ -22,7 +22,7 @@ class LanguageAdmin(ModelAdmin):
 
 @admin.register(models.Course)
 class CourseAdmin(ModelAdmin):
-    list_display = ('title', 'description', 'get_user', 'price', 'is_active', 'created_at', 'updated_at')
+    list_display = ('title', 'description', 'get_user', 'price', 'course_duration', 'is_active')
     
     def get_user(self, obj):
         try:
@@ -39,9 +39,9 @@ class CourseAdmin(ModelAdmin):
 
 @admin.register(models.Topic)
 class TopicAdmin(ModelAdmin):
-    list_display = ('title', 'course', 'order', 'is_active')
+    list_display = ('title', 'course', 'order', 'topic_duration', 'is_active')
     
     
 @admin.register(models.Lesson)
 class LessonAdmin(ModelAdmin):
-    list_display = ('title', 'topic', 'course', 'type', 'video_duration', 'is_active')
+    list_display = ('title', 'topic', 'course', 'type', 'lesson_duration', 'is_active')
