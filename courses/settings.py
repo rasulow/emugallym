@@ -141,7 +141,9 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_UPLOAD_PATH = "uploads/" # RichField store
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = None  # Disable the limit on request body size
+FILE_UPLOAD_MAX_MEMORY_SIZE = None  # Disable the limit on file upload size
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
