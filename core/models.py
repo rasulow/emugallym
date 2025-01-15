@@ -72,6 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30, null=True, blank=True)
     middle_name = models.CharField(max_length=30, null=True, blank=True)
     biography = models.TextField(null=True, blank=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
     profession = models.ForeignKey(Profession, on_delete=models.SET_NULL, null=True, blank=True)
     phone_number = models.CharField(max_length=30, null=True, blank=True)
     img = models.ImageField(upload_to='profile/', blank=True, null=True)

@@ -64,6 +64,7 @@ class UserGetSerializer(serializers.ModelSerializer):
                     'first_name', 
                     'last_name', 
                     'middle_name',
+                    'address'
                     'profession', 
                     'type', 
                     'phone_number', 
@@ -89,6 +90,7 @@ class UserPostSerializer(serializers.ModelSerializer):
                     'first_name', 
                     'last_name', 
                     'middle_name',
+                    'address'
                     'profession', 
                     'type', 
                     'phone_number', 
