@@ -18,7 +18,7 @@ class Author(models.Model):
         db_table = 'author'
         verbose_name = 'Author'
         verbose_name_plural = 'Authors'
-        ordering = ['order']
+        ordering = ['-created_at']
         
     def __str__(self):
         return self.fullname
@@ -41,7 +41,7 @@ class Genre(models.Model):
         db_table = 'genre'
         verbose_name = 'Genre'
         verbose_name_plural = 'Genres'
-        ordering = ['order']
+        ordering = ['-created_at']
         
     def __str__(self):
         return self.title
@@ -64,7 +64,7 @@ class Tag(models.Model):
         db_table = 'tag'
         verbose_name = 'Tag'
         verbose_name_plural = 'Tags'
-        ordering = ['order']
+        ordering = ['-created_at']
         
     def __str__(self):
         return self.title
@@ -103,7 +103,7 @@ class Book(models.Model):
         db_table = 'book'
         verbose_name = 'Book'
         verbose_name_plural = 'Books'
-        ordering = ['order']
+        ordering = ['-created_at']
         
     def __str__(self):
         return self.title
