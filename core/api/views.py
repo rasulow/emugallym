@@ -114,9 +114,10 @@ class TopicViewSet(viewsets.ModelViewSet):
     ordering_fields = ['order', 'created_at']
     
     def get_serializer_class(self):
-        if self.request.method == 'POST':
+        if self.action in ['retrieve', 'list']:
+            return serializers.TopicGetSerializer
+        elif self.action in ['create', 'update', 'partial_update']:
             return serializers.TopicPostSerializer
-        return serializers.TopicGetSerializer
     
     
     
