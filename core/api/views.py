@@ -106,12 +106,18 @@ class CourseViewSet(viewsets.ModelViewSet):
 
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = models.Topic.objects.all()
-    serializer_class = serializers.TopicSerializer
     lookup_field ='slug'
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    parser_classes = (MultiPartParser, FormParser)
     filterset_fields = ['course__slug']
     search_fields = ['title']
     ordering_fields = ['order', 'created_at']
+    
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return serializers.TopicPostSerializer
+        return serializers.TopicGetSerializer
+    
     
     
     

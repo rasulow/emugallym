@@ -33,13 +33,20 @@ class LessonSerializer(serializers.ModelSerializer):
         read_only_fields = ('slug', 'lesson_duration',)    
         
         
-class TopicSerializer(serializers.ModelSerializer):
+class TopicGetSerializer(serializers.ModelSerializer):
     lessons = LessonSerializer(many=True)
     
     class Meta:
         model = models.Topic
         fields = ('id', 'title', 'course', 'order', 'topic_duration', 'lessons', 'slug', 'is_active',)
         read_only_fields = ('slug', 'lessons', 'topic_duration',)
+        
+        
+class TopicPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Topic
+        fields = ('id', 'title', 'course', 'order', 'is_active',)
+        
         
         
 class CourseCreateSerializer(serializers.ModelSerializer):
