@@ -105,3 +105,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def fullname(self):
         return f"{self.first_name} {self.middle_name} {self.last_name}"
         
+        
+    class Meta:
+        db_table = 'user'
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+        ordering = ['-created_at']
