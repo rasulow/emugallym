@@ -81,26 +81,21 @@ class UserPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-                    'id', 
                     'username', 
                     'email', 
-                    'fullname', 
                     'type', 
-                    'biography', 
                     'first_name', 
                     'last_name', 
                     'middle_name',
+                    'biography', 
                     'address',
                     'profession', 
                     'type', 
                     'phone_number', 
                     'img', 
                     'thumbnail', 
-                    'slug', 
-                    'is_active', 
                     'order'
                 ]
-        read_only_fields = ['slug', 'is_active', 'fullname']
     
     
     
