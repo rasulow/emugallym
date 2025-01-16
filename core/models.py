@@ -37,6 +37,7 @@ class Category(models.Model):
         
 class Level(models.Model):
     title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -45,6 +46,10 @@ class Level(models.Model):
     def __str__(self):
         return self.title
     
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(str(uuid.uuid4()))
+        super().save(*args, **kwargs)
     
     class Meta:
         db_table = 'level'
@@ -55,6 +60,7 @@ class Level(models.Model):
         
 class Language(models.Model):
     title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -63,6 +69,10 @@ class Language(models.Model):
     def __str__(self):
         return self.title
     
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(str(uuid.uuid4()))
+        super().save(*args, **kwargs)
     
     class Meta:
         db_table = 'languages'

@@ -7,13 +7,16 @@ from core import models
 class LevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Level
-        fields = ('id', 'title', 'order', 'is_active',)
+        fields = ('id', 'title', 'slug', 'order', 'is_active',)
+        read_only_fields = ('slug',)
         
         
 class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Language
-        fields = ('id', 'title', 'order', 'is_active',)
+        fields = ('id', 'title', 'slug', 'order', 'is_active',)
+        read_only_fields = ('slug',)
+        
         
         
 class CategorySerializer(serializers.ModelSerializer):

@@ -48,6 +48,12 @@ class CourseViewSet(viewsets.ModelViewSet):
                 type=openapi.TYPE_STRING,
             ),
             openapi.Parameter(
+                'level',
+                openapi.IN_QUERY,
+                description="Comma-separated list of categories to filter by",
+                type=openapi.TYPE_STRING,
+            ),
+            openapi.Parameter(
                 'paid',
                 openapi.IN_QUERY,
                 description="Filter by paid status (true/false)",
@@ -82,6 +88,10 @@ class CourseViewSet(viewsets.ModelViewSet):
         category = self.request.query_params.get('category')
         if category:
             queryset = queryset.filter(category__slug__in=category.split(','))
+            
+        level = self.request.query_params.get('level')
+        if level:
+            queryset = queryset.filter(level__slug__in=level.split(','))
 
         paid = self.request.query_params.get('paid')
         if paid is not None:
