@@ -143,7 +143,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CKEDITOR_UPLOAD_PATH = "uploads/" # RichField store
 
-DATA_UPLOAD_MAX_MEMORY_SIZE = None  # Disable the limit on request body size
-FILE_UPLOAD_MAX_MEMORY_SIZE = None  # Disable the limit on file upload size
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1073741824
+FILE_UPLOAD_MAX_MEMORY_SIZE = 1073741824 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
