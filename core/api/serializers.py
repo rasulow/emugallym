@@ -117,7 +117,7 @@ class CourseListSerializer(serializers.ModelSerializer):
     
 class CourseDetailSerializer(serializers.ModelSerializer):
     category = CategorySerializer(many=True)
-    topics = TopicSerializer(many=True)
+    topics = TopicGetSerializer(many=True)
     level = LevelSerializer()
     language = LanguageSerializer()
     user = serializers.SerializerMethodField()
