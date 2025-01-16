@@ -56,13 +56,11 @@ class CourseCreateSerializer(serializers.ModelSerializer):
             'thumbnail', 
             'price', 
             'discount', 
-            'slug', 
             'is_active', 
             'paid', 
             'certified', 
             'start_date',
         )
-        read_only_fields = ('slug',)
         
         
         

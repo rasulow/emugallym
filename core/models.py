@@ -75,7 +75,7 @@ class Course(models.Model):
     title = models.CharField(max_length=100)
     short_description = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    learning_outcomes = RichTextField(blank=True, null=True)
+    learning_outcomes = models.TextField(blank=True, null=True)
     requirements = models.TextField(blank=True, null=True)
     user = models.IntegerField()
     category = models.ManyToManyField(Category, blank=True, null=True)
