@@ -50,7 +50,7 @@ class CourseViewSet(viewsets.ModelViewSet):
             openapi.Parameter(
                 'level',
                 openapi.IN_QUERY,
-                description="Comma-separated list of categories to filter by",
+                description="Comma-separated list of level to filter by",
                 type=openapi.TYPE_STRING,
             ),
             openapi.Parameter(

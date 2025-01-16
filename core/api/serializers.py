@@ -77,6 +77,8 @@ class CourseCreateSerializer(serializers.ModelSerializer):
 class CourseListSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
     category = CategorySerializer(many=True)
+    level = LevelSerializer()
+    language = LanguageSerializer()
     
     class Meta:
         model = models.Course
