@@ -41,7 +41,7 @@ SWAGGER_SETTINGS = {
 }
 
 INSTALLED_APPS = [
-    'corsheaders'
+    'corsheaders',
     "unfold", 
     "unfold.contrib.filters", 
     "unfold.contrib.forms",
