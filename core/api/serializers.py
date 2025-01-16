@@ -65,7 +65,7 @@ class UserGetSerializer(serializers.ModelSerializer):
                     'last_name', 
                     'middle_name',
                     'address'
-                    'profession', 
+                    # 'profession', 
                     'type', 
                     'phone_number', 
                     'img', 
