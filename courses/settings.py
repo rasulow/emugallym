@@ -39,6 +39,18 @@ INSTALLED_APPS = [
 
 USERS_SERVICE_URL = 'http://216.250.12.100:5000'
 
+
+SWAGGER_SETTINGS = {
+    'DEFAULT_API_URL': 'http://216.250.13.53/api',  
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
+}
+
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
