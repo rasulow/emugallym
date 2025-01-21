@@ -71,7 +71,9 @@ class CourseCreateSerializer(serializers.ModelSerializer):
             'paid', 
             'certified', 
             'start_date',
+            'slug',
         )
+        read_only_fields = ('slug',)
         
         
         
