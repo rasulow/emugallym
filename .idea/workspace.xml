@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5057d0f2-fe22-4c0c-9c6e-08f54677ea79" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/core/tests/test_category.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pytest.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-    </list>
+    <list default="true" id="5057d0f2-fe22-4c0c-9c6e-08f54677ea79" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,8 +37,8 @@
     "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "course-service",
-    "last_opened_file_path": "D:/Projects/emugallym",
+    "git-widget-placeholder": "library-service",
+    "last_opened_file_path": "D:/Projects/shatumar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -102,6 +97,7 @@
       <workItem from="1740638149054" duration="163000" />
       <workItem from="1740638320248" duration="458000" />
       <workItem from="1740651057945" duration="4449000" />
+      <workItem from="1740719460563" duration="20000" />
     </task>
     <servers />
   </component>
